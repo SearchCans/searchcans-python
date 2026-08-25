@@ -2,6 +2,8 @@
 
 Official Python SDK for the [SearchCans SERP API](https://www.searchcans.com/google-search-api/) and [Reader API](https://www.searchcans.com/reader-api/).
 
+[Visit SearchCans](https://www.searchcans.com/) for API access, product information, and developer resources.
+
 Build account-aware search, research, SEO/GEO, and RAG applications with one small client. The SDK supports Google, Bing, Google verticals, web extraction, document extraction, screenshots, and account pre-flight checks.
 
 > The verified `main` branch is available now. The `v0.1.0` GitHub Release and PyPI package will be created after final release approval.

@@ -23,6 +23,8 @@ report, issue, or commit.
 - [Account-Aware Usage](Account-Aware-Usage)
 - [Release and Maintenance](Releases)
 
-[API documentation](https://www.searchcans.com/apis/) · [SDK documentation site](https://searchcans.github.io/searchcans-python/)
+[Visit SearchCans](https://www.searchcans.com/) ·
+[API documentation](https://www.searchcans.com/apis/) ·
+[SDK documentation site](https://searchcans.github.io/searchcans-python/)
 
 [Source repository](https://github.com/SearchCans/searchcans-python)
