@@ -50,7 +50,7 @@ def _error_from_payload(payload: Mapping[str, Any]) -> APIError:
         error_type = AuthenticationError
     elif safe_code == 402:
         error_type = InsufficientCreditsError
-    elif safe_code == 1009:
+    elif safe_code in {429, 1009, 1010}:
         error_type = ConcurrencyLimitError
     else:
         error_type = APIError
@@ -62,7 +62,10 @@ def _decode_response(response: httpx.Response) -> APIResponse[Mapping[str, Any]]
         payload = response.json()
     except ValueError as error:
         if not response.is_success:
-            raise HTTPStatusError(response.status_code, response.text[:500]) from error
+            message = response.text[:500]
+            if response.status_code in {401, 402, 403, 429}:
+                raise _error_from_payload({"code": response.status_code, "msg": message}) from error
+            raise HTTPStatusError(response.status_code, message) from error
         raise ResponseFormatError("SearchCans returned invalid JSON") from error
     if not isinstance(payload, Mapping):
         raise ResponseFormatError("SearchCans response must be a JSON object")
@@ -72,11 +75,13 @@ def _decode_response(response: httpx.Response) -> APIResponse[Mapping[str, Any]]
         raise _error_from_payload(payload)
     if not response.is_success:
         message = payload.get("msg")
-        raise HTTPStatusError(
-            response.status_code,
-            message if isinstance(message, str) else "Unexpected HTTP response",
-            payload.get("requestId") if isinstance(payload.get("requestId"), str) else None,
-        )
+        safe_message = message if isinstance(message, str) else "Unexpected HTTP response"
+        request_id = payload.get("requestId") if isinstance(payload.get("requestId"), str) else None
+        if response.status_code in {401, 402, 403, 429}:
+            raise _error_from_payload(
+                {"code": response.status_code, "msg": safe_message, "requestId": request_id}
+            )
+        raise HTTPStatusError(response.status_code, safe_message, request_id)
     if not isinstance(code, int):
         raise ResponseFormatError("SearchCans response is missing an integer 'code'")
 

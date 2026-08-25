@@ -130,7 +130,12 @@ def test_reader_file_and_screenshot_options_map_to_documented_payloads() -> None
 
 @pytest.mark.parametrize(
     ("code", "error_type"),
-    [(401, AuthenticationError), (402, InsufficientCreditsError), (1009, ConcurrencyLimitError)],
+    [
+        (401, AuthenticationError),
+        (402, InsufficientCreditsError),
+        (1009, ConcurrencyLimitError),
+        (1010, ConcurrencyLimitError),
+    ],
 )
 def test_api_envelope_errors_are_typed(code: int, error_type: type) -> None:
     def handler(request: httpx.Request) -> httpx.Response:
@@ -138,6 +143,26 @@ def test_api_envelope_errors_are_typed(code: int, error_type: type) -> None:
 
     client = sync_client(handler)
     with pytest.raises(error_type):
+        client.serp.search("test")
+    client.close()
+
+
+def test_http_lane_limit_is_typed_as_concurrency_error() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(429, json={"code": 429, "msg": "All lanes are occupied"})
+
+    client = sync_client(handler)
+    with pytest.raises(ConcurrencyLimitError):
+        client.serp.search("test")
+    client.close()
+
+
+def test_non_json_http_lane_limit_is_typed_as_concurrency_error() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(429, text="All lanes are occupied")
+
+    client = sync_client(handler)
+    with pytest.raises(ConcurrencyLimitError):
         client.serp.search("test")
     client.close()
 

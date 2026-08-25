@@ -62,7 +62,7 @@ Returns `APIResponse[Account]`. The stable fields include `remain`, `concurrent`
 | --- | --- |
 | `AuthenticationError` | Invalid key, expired key, or denied resource. |
 | `InsufficientCreditsError` | Not enough credits for the request. |
-| `ConcurrencyLimitError` | Too many concurrent calls for the endpoint/account. |
+| `ConcurrencyLimitError` | Too many concurrent calls (`1009`, `1010`, or HTTP `429`). |
 | `HTTPStatusError` | Non-success HTTP response without a usable API envelope. |
 | `ResponseFormatError` | Unexpected response JSON shape. |
 | `TransportError` | Network or HTTP-client failure. |
