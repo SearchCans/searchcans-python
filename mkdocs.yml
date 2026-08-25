@@ -1,0 +1,13 @@
+site_name: SearchCans Python SDK
+site_description: Official Python SDK for the SearchCans SERP API and Reader API.
+site_url: https://searchcans.github.io/searchcans-python/
+repo_url: https://github.com/SearchCans/searchcans-python
+repo_name: SearchCans/searchcans-python
+theme:
+  name: mkdocs
+nav:
+  - Overview: index.md
+  - Quickstart: quickstart.md
+  - API reference: reference.md
+  - Account-aware usage: account-aware.md
+  - Releases: release.md
