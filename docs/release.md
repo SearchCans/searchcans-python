@@ -12,8 +12,9 @@ No PyPI API token should be stored in this repository.
 
 1. Update the version in `pyproject.toml`, `src/searchcans/__init__.py`, and `CHANGELOG.md`.
 2. Run `python -m pytest`, `ruff check .`, `python -m build`, and `mkdocs build --strict` locally.
-3. Merge the release commit to `main`.
-4. Create and push an annotated tag such as `v0.1.0`.
-5. The `Create GitHub Release` workflow verifies the package, builds distributions, and creates a GitHub Release with generated notes.
-6. Use the manual **Publish to PyPI** workflow, selecting that exact tag. Approve the `pypi` environment when prompted.
-7. Verify `pip install searchcans==<version>` in a clean environment and add the PyPI installation command to release communications.
+3. With an authorized local API key, run `python scripts/account_smoke.py`. Do not add the key to GitHub Actions.
+4. Merge the release commit to `main`.
+5. Create and push an annotated tag such as `v0.1.0`.
+6. The `Create GitHub Release` workflow verifies the package, builds distributions, and creates a GitHub Release with generated notes.
+7. Use the manual **Publish to PyPI** workflow, selecting that exact tag. Approve the `pypi` environment when prompted.
+8. Verify `pip install searchcans==<version>` in a clean environment and add the PyPI installation command to release communications.
