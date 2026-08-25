@@ -23,3 +23,7 @@ export SEARCHCANS_API_KEY="your_api_key"
 ```
 
 Continue with the [Quickstart](quickstart.md).
+
+## Explore SearchCans
+
+[Visit SearchCans](https://www.searchcans.com/) for product information, API access, and developer resources.

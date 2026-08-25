@@ -43,3 +43,5 @@ async def research() -> None:
 Use `pages` only for a Google Search batch. The SDK maps `pages=2` to the raw API's `page: 2` field and does not expose raw `p`.
 
 This may return data from multiple upstream pages. Positions are page-local, so keep the result item's own page label when comparing records.
+
+Need an API key or product documentation? [Visit SearchCans](https://www.searchcans.com/).

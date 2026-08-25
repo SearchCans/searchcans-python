@@ -13,7 +13,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def git_output(repository: Path, *args: str) -> str:
     result = subprocess.run(
-        ["git", *args], cwd=repository, text=True, capture_output=True, check=False
+        ["git", *args],
+        cwd=repository,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        capture_output=True,
+        check=False,
     )
     if result.returncode:
         raise ValueError(result.stderr.strip() or "Git release validation failed")

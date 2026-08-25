@@ -12,7 +12,13 @@ from validate_release import validate_release_tag  # noqa: E402
 
 def git(repository: Path, *args: str) -> str:
     result = subprocess.run(
-        ["git", *args], cwd=repository, text=True, capture_output=True, check=False
+        ["git", *args],
+        cwd=repository,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        capture_output=True,
+        check=False,
     )
     assert result.returncode == 0, result.stderr
     return result.stdout.strip()
