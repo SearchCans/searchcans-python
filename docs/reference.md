@@ -17,6 +17,8 @@ client.serp.search(
     country=None,
     language=None,
     pages=1,
+    timeout_ms=None,
+    include_html=False,
     knowledge_graph=False,
     people_also_ask=False,
     ai_summary=False,
@@ -29,6 +31,8 @@ client.serp.search(
 Supported engines are `google`, `bing`, `google_news`, `google_shopping`, `google_images`, `google_videos`, and `google_short_videos`.
 
 `pages > 1` is accepted only for `google`. The SDK rejects it for Bing and Google vertical engines rather than send an ambiguous request.
+
+`timeout_ms` maps to the API's `d` parameter. Set `include_html=True` only when you need raw SERP HTML; otherwise the SDK omits it to keep responses smaller.
 
 ## `client.reader`
 

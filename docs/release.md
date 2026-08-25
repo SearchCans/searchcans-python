@@ -10,7 +10,7 @@ No PyPI API token should be stored in this repository.
 
 ## Release a version
 
-1. Update the version in `pyproject.toml`, `src/searchcans/__init__.py`, and `CHANGELOG.md`.
+1. Update the version in `pyproject.toml`, `src/searchcans/_version.py`, and `CHANGELOG.md`.
 2. Run `python -m pytest`, `ruff check .`, `python -m build`, and `mkdocs build --strict` locally.
 3. With an authorized local API key, run `python scripts/account_smoke.py`. Do not add the key to GitHub Actions.
 4. Merge the release commit to `main`.

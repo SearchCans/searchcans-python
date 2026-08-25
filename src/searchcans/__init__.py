@@ -12,6 +12,7 @@ from ._errors import (
     TransportError,
 )
 from ._models import Account, APIKey, APIResponse, ProxyTier, ScreenshotMode, SearchEngine
+from ._version import __version__
 
 __all__ = [
     "APIError",
@@ -30,6 +31,5 @@ __all__ = [
     "SearchCansError",
     "SearchEngine",
     "TransportError",
+    "__version__",
 ]
-
-__version__ = "0.1.0"

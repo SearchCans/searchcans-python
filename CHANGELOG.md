@@ -8,5 +8,5 @@ All notable changes are documented in this file.
 
 - Official synchronous and asynchronous Python clients.
 - SERP, Reader, file extraction, screenshot, and Account API endpoint groups.
-- Explicit Google batch pagination safeguards and typed API errors.
+- Explicit Google batch pagination safeguards, SERP timeout/raw-HTML controls, and typed API errors.
 - GitHub Actions CI, documentation publishing, dependency updates, and manual PyPI Trusted Publishing workflow.

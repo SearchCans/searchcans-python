@@ -23,6 +23,7 @@ from ._services import (
     ReaderService,
     SerpService,
 )
+from ._version import __version__
 
 DEFAULT_BASE_URL = "https://www.searchcans.com"
 
@@ -33,7 +34,7 @@ def _headers(api_key: str) -> Mapping[str, str]:
     return {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "User-Agent": "searchcans-python/0.1.0",
+        "User-Agent": f"searchcans-python/{__version__}",
     }
 
 

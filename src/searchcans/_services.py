@@ -12,6 +12,8 @@ def build_serp_payload(
     country: Optional[str],
     language: Optional[str],
     pages: int,
+    timeout_ms: Optional[int],
+    include_html: bool,
     knowledge_graph: bool,
     people_also_ask: bool,
     ai_summary: bool,
@@ -32,6 +34,8 @@ def build_serp_payload(
         raise ValueError("pages must be at least 1")
     if pages > 1 and selected_engine is not SearchEngine.GOOGLE:
         raise ValueError("pages > 1 is currently supported only for engine='google'")
+    if timeout_ms is not None and timeout_ms < 1:
+        raise ValueError("timeout_ms must be positive")
 
     payload: dict[str, Any] = {"t": selected_engine.value, "s": query}
     if country:
@@ -40,6 +44,10 @@ def build_serp_payload(
         payload["language"] = language
     if pages > 1:
         payload["page"] = pages
+    if timeout_ms is not None:
+        payload["d"] = timeout_ms
+    if include_html:
+        payload["html"] = 1
 
     optional_features = {
         "knowledgeGraph": knowledge_graph,
@@ -114,6 +122,8 @@ class SerpService:
         country: Optional[str] = None,
         language: Optional[str] = None,
         pages: int = 1,
+        timeout_ms: Optional[int] = None,
+        include_html: bool = False,
         knowledge_graph: bool = False,
         people_also_ask: bool = False,
         ai_summary: bool = False,
@@ -127,6 +137,8 @@ class SerpService:
             country,
             language,
             pages,
+            timeout_ms,
+            include_html,
             knowledge_graph,
             people_also_ask,
             ai_summary,
@@ -220,6 +232,8 @@ class AsyncSerpService:
         country: Optional[str] = None,
         language: Optional[str] = None,
         pages: int = 1,
+        timeout_ms: Optional[int] = None,
+        include_html: bool = False,
         knowledge_graph: bool = False,
         people_also_ask: bool = False,
         ai_summary: bool = False,
@@ -233,6 +247,8 @@ class AsyncSerpService:
             country,
             language,
             pages,
+            timeout_ms,
+            include_html,
             knowledge_graph,
             people_also_ask,
             ai_summary,
