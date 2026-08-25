@@ -4,10 +4,10 @@ Official Python SDK for the [SearchCans SERP API](https://www.searchcans.com/goo
 
 Build account-aware search, research, SEO/GEO, and RAG applications with one small client. The SDK supports Google, Bing, Google verticals, web extraction, document extraction, screenshots, and account pre-flight checks.
 
-> `v0.1.0` is the first public SDK release. Install from GitHub until the initial PyPI release is published.
+> The verified `main` branch is available now. The `v0.1.0` GitHub Release and PyPI package will be created after final release approval.
 
 ```bash
-pip install "git+https://github.com/SearchCans/searchcans-python.git@v0.1.0"
+pip install "git+https://github.com/SearchCans/searchcans-python.git@main"
 ```
 
 After PyPI publication:

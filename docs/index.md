@@ -10,10 +10,10 @@ The SDK returns the original successful API envelope and adds typed account mode
 
 ## Install
 
-Until the first PyPI publication, install the tagged GitHub release:
+Until the first GitHub Release and PyPI publication, install the verified `main` branch:
 
 ```bash
-pip install "git+https://github.com/SearchCans/searchcans-python.git@v0.1.0"
+pip install "git+https://github.com/SearchCans/searchcans-python.git@main"
 ```
 
 Then set your key outside source control:
