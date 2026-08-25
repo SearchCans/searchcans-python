@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -20,6 +22,8 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: python -m pytest
+      - run: python scripts/generate_wiki.py --check
+      - run: python scripts/validate_release.py --tag "$GITHUB_REF_NAME"
       - run: python -m build
       - run: python -m twine check dist/*
       - run: gh release create "$GITHUB_REF_NAME" dist/* --generate-notes --verify-tag

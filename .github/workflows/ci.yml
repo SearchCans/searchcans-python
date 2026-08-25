@@ -25,6 +25,7 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: python -m pytest
+      - run: python scripts/generate_wiki.py --check
       - run: python -m build
       - run: python -m twine check dist/*
       - if: matrix.python-version == '3.12'

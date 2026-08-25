@@ -1,0 +1,58 @@
+name: Sync generated GitHub Wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/*.md"
+      - "docs/generated/wiki/**"
+      - "scripts/generate_wiki.py"
+      - "scripts/sync_wiki.py"
+      - ".github/workflows/sync-wiki.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "searchcans-python-wiki"
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python scripts/generate_wiki.py --check
+      - name: Check whether Wiki synchronization is configured
+        id: preflight
+        env:
+          WIKI_SYNC_TOKEN: ${{ secrets.WIKI_SYNC_TOKEN }}
+        run: |
+          if [ -z "$WIKI_SYNC_TOKEN" ]; then
+            echo "WIKI_SYNC_TOKEN is not configured; generated Wiki validation passed and synchronization was skipped."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Clone and synchronize the Wiki repository
+        if: steps.preflight.outputs.enabled == 'true'
+        env:
+          WIKI_SYNC_TOKEN: ${{ secrets.WIKI_SYNC_TOKEN }}
+        run: |
+          askpass="$RUNNER_TEMP/wiki-askpass.sh"
+          printf '%s\n' '#!/usr/bin/env sh' 'case "$1" in' '*Username*) printf "%s" "x-access-token" ;;' '*Password*) printf "%s" "$WIKI_SYNC_TOKEN" ;;' 'esac' > "$askpass"
+          chmod 700 "$askpass"
+          export GIT_ASKPASS="$askpass"
+          export GIT_TERMINAL_PROMPT=0
+          git clone "https://github.com/${GITHUB_REPOSITORY}.wiki.git" wiki
+          python scripts/sync_wiki.py --source docs/generated/wiki --target wiki
+          git -C wiki config user.name "SearchCans"
+          git -C wiki config user.email "support@searchcans.com"
+          git -C wiki add --all
+          if git -C wiki diff --cached --quiet; then exit 0; fi
+          git -C wiki commit -m "docs: sync generated SDK Wiki"
+          git -C wiki push

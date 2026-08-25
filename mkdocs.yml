@@ -3,6 +3,8 @@ site_description: Official Python SDK for the SearchCans SERP API and Reader API
 site_url: https://searchcans.github.io/searchcans-python/
 repo_url: https://github.com/SearchCans/searchcans-python
 repo_name: SearchCans/searchcans-python
+exclude_docs: |
+  generated/wiki/**
 theme:
   name: mkdocs
 nav:
